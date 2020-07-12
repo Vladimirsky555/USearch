@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>doc/tribal_messianship</file>
+    </qresource>
+</RCC>
