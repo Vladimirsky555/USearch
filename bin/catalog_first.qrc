@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>doc/catalog_first</file>
+    </qresource>
+</RCC>
