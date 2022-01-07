@@ -5,7 +5,11 @@
 #include <QRegExp>
 #include <QMessageBox>
 
+#include "data/quoteitem.h"
+#include "data/searchitem.h"
+#include "data/searchstorage.h"
 #include "helpers/qregexphighlighter.h"
+#include "helpers/searchitemsmaker.h"
 #include "search/booksselector.h"
 #include "search/catalogsselector.h"
 
@@ -14,16 +18,6 @@ class SearchWindow;
 }
 
 class QAction;
-
-//Структура, формирующаяся по результатам поиска в одном цикле
-struct searchItem
-{
-    Catalog *_catalog;
-    BookItem *_book;
-    ListItem *_chapter;
-    TextItem *_section;
-    int textCount;
-};
 
 //Структура, описывающая номер строки, в которой найдено искомое слово
 struct textItem
@@ -37,23 +31,18 @@ class SearchWindow : public QWidget
     Q_OBJECT
 
     Storage *s;
-    QList<BookItem*> currentBooks;//Массив книг каталога для загрузки
-    Catalog *currentCatalog;
-    BookItem* currentBook;
-    ListItem* currentChapter;
-    TextItem* currentSection;
-    QString currentTitle;
-    QString currentText;
+    SearchStorage *ss;
+    SearchItemsMaker *sim;//Переменная для формирования результата поиска и текста с цитатами
 
-    QStringList nameList;
-    QStringList pathList;
+    Catalog *currentCatalog;
+    BookItem *currentBook;
+    ListItem *currentChapter;
+    TextItem *currentSection;
+    QString currentText;
+    QString currentTitle;
 
     bool resource;
 
-    QList<Catalog*> catalogsList;//для поиска по каталогам или одному каталогу
-    QList<BookItem*> booksList;//для поиска по книгам или в отдельной книге
-
-    QList<searchItem> searchItems; //Массив структур, формирующийся по результатам поиска
     QList<textItem> textItems;
 
     QList<QAction*> listActions;
@@ -71,22 +60,17 @@ class SearchWindow : public QWidget
 
     Ui::SearchWindow *ui;
 
-private:
-    bool checkRegExp(QRegExp rx);
-
 public:
     explicit SearchWindow(QWidget *parent = 0);
     ~SearchWindow();
 
-    void loadFromFile(QString path);
-
+    //Поиск по ключевому слову (фразе)
     void findInCatalogs();//поиск по всем каталогам
     void findInBooks();
 
-    //Вспомогательные для поиска функции
-    void sortResult();
-    int findInOneText(int *c, QString txt);
-    void addSearchItem(int cnt);
+    void prepareWidgets();//подготовка виджетов
+    int showResult();//Отображение результатов поиска в нижнем виджете
+    void report(int c, int n);//отчёт о результатах
 
 private slots:
     void contextMenuRequsted(const QPoint &p);

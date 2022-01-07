@@ -1,8 +1,45 @@
 #include "storage.h"
 
+#include <QFile>
+#include <QDataStream>
+
 Storage::Storage(QObject *parent) : QObject(parent)
 {
+    nameList      << "Первый каталог"
+                  << "Второй каталог"
+                   << "Третий каталог";
 
+    pathList     << ":/doc/catalog_first"
+                 << ":/doc/catalog_second"
+                 << ":/doc/catalog_third";
+
+    //Грузим из файла названия каталогов и пути к ним
+    for(int i = 0; i < pathList.size(); i++)
+    {
+        Catalog *catalog = new Catalog(nameList[i], pathList[i]);
+        loadFromFile(pathList[i]);
+        catalog->setBook(currentBooks);
+        addCatalog(catalog);
+        catalogsList.append(catalog);
+    }
+}
+
+void Storage::loadFromFile(QString path)
+{
+    currentBooks.clear();
+    QFile f(path);
+    if(!f.exists()) return;
+
+    f.open(QFile::ReadOnly);
+    QDataStream reader(&f);
+
+    while(!reader.atEnd()){
+        QByteArray arr;
+        reader >> arr;
+        currentBooks.append(new BookItem(arr));
+    }
+
+    f.close();
 }
 
 Catalog* Storage::getCatalogById(int id)
@@ -75,15 +112,6 @@ void Storage::addCatalog(Catalog* catalog)
     catalogs.append(catalog);
 }
 
-void Storage::addAtTheEndOfCatalog(Catalog *catalog)
-{
-    catalogs.push_back(catalog);
-}
-
-void Storage::renameCatalog(Catalog *catalog, QString name)
-{
-    catalog->setName(name);
-}
 
 QStringList Storage::getPathList()
 {
@@ -107,32 +135,6 @@ QStringList Storage::getNameList()
     return namesList;
 }
 
-void Storage::deleteCatalog(Catalog *catalog)
-{
-    if(catalog != NULL)
-    catalogs.removeOne(catalog);
-    delete catalog;
-}
-
-void Storage::up(int id)
-{
-    Catalog *tmp;
-    if(id > 0){
-        tmp = catalogs[id];
-        catalogs[id] = catalogs[id - 1];
-        catalogs[id - 1] = tmp;
-    }
-}
-
-void Storage::down(int id)
-{
-    Catalog *tmp;
-    if(id < catalogs.count() - 1){
-        tmp = catalogs[id];
-        catalogs[id] = catalogs[id + 1];
-        catalogs[id + 1] = tmp;
-    }
-}
 
 int Storage::getCount()
 {

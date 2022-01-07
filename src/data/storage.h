@@ -10,9 +10,19 @@ class Storage : public QObject
 
     QList<Catalog*> catalogs;
 
+public:
+    QStringList nameList;
+    QStringList pathList;
+
+    QList<Catalog*> catalogsList;//для поиска по каталогам или одному каталогу
+    QList<BookItem*> booksList;//Список книг для поиска
+
+    QList<BookItem*> currentBooks;//Массив книг каталога для загрузки
 
 public:
-    explicit Storage(QObject *parent = nullptr);
+    Storage(QObject *parent = nullptr);
+
+    void loadFromFile(QString path);
 
     Catalog* getCatalogById(int id);
     Catalog* getCatalogByPath(QString path);
@@ -21,16 +31,9 @@ public:
     BookItem* getBookByName(QString name);
     QList<Catalog*> Catalogs();
     void addCatalog(Catalog *catalog);
-    void addAtTheEndOfCatalog(Catalog *catalog);
-    void renameCatalog(Catalog *catalog, QString name);
     QStringList getPathList();
     QStringList getNameList();
-    void deleteCatalog(Catalog *catalog);
-    void up(int id);
-    void down(int id);
     int getCount();
-
-signals:
 
 };
 

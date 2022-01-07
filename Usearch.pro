@@ -49,8 +49,10 @@ FORMS   += src/search/searchwindow.ui \
            
 
 RESOURCES += \
+    bin/first_catalog.qrc \
     bin/images.qrc \
     bin/basic.qrc \
+    bin/second_catalog.qrc \
     bin/tfs_rus.qrc \
     bin/tfs_quotes.qrc \
     bin/tfs_eng_part_1.qrc \
@@ -58,5 +60,8 @@ RESOURCES += \
     bin/tfs_eng_part_3.qrc \
     bin/others.qrc \
     bin/spiritual_world.qrc \
+    bin/third_catalog.qrc \
     bin/tribal_messianship.qrc \
     bin/bible.qrc
+
+DISTFILES +=
