@@ -5,7 +5,6 @@
 #include <QRegExp>
 #include <QMessageBox>
 
-#include "data/quoteitem.h"
 #include "data/searchitem.h"
 #include "data/searchstorage.h"
 #include "helpers/qregexphighlighter.h"

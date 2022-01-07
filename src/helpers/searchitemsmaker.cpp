@@ -11,7 +11,6 @@ SearchItemsMaker::SearchItemsMaker(Storage *s, SearchStorage *ss, QString patter
 int SearchItemsMaker::searchItemsMakerfromCatalogs()
 {
     ss->searchItems.clear();
-    ss->quoteItems.clear();
 
     int c = 0;
     for(int k = 0; k < s->catalogsList.count(); k++){
@@ -46,7 +45,6 @@ int SearchItemsMaker::searchItemsMakerfromCatalogs()
 int SearchItemsMaker::searchItemsMakerfromBooks(QList<BookItem *> booksList)
 {
     ss->searchItems.clear();
-    ss->quoteItems.clear();
 
     int c = 0;
     int cnt = 0;
