@@ -3,7 +3,7 @@
 
 https://hoondok.ru/data/soft/umbooks/Usearch.zip Ссылка для скачивания
 
-Для создания своей собственной базы для поиска в программе QuoteBook:
+Для создания своей собственной базы для поиска в программе USearch:
 
 Скачать программу BooksMaker.exe - https://jino.cloud/s/r7j3cJnLrFY2boY
 
